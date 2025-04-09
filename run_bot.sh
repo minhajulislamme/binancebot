@@ -36,7 +36,7 @@ echo -e "${GREEN}Starting trading bot with small-account settings...${NC}"
 echo -e "${YELLOW}Bot will run in the background. Check logs for status.${NC}"
 
 # Run the bot with nohup to keep it running after SSH session closes
-nohup python3 "${SCRIPT_DIR}/main.py" --small-account > "${SCRIPT_DIR}/logs/bot_console.log" 2>&1 &
+nohup python3 "${SCRIPT_DIR}/main.py" > "${SCRIPT_DIR}/logs/bot_console.log" 2>&1 &
 
 # Save the PID to a file for later use
 echo $! > "${SCRIPT_DIR}/bot.pid"
