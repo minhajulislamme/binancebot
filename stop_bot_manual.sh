@@ -12,7 +12,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# Check if the bot PID file exists
+# Check if the bot PID file exists fun
 if [ ! -f "${SCRIPT_DIR}/bot.pid" ]; then
     echo -e "${YELLOW}Bot PID file not found. The bot might not be running.${NC}"
     
