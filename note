@@ -1,0 +1,7 @@
+./setup.sh
+./run_bot.sh
+./check_bot_status.sh
+./stop_bot_manual.sh
+./setup_cron.sh
+./check_bot_status.sh
+104.248.155.109

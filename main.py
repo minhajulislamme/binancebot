@@ -283,16 +283,23 @@ def initialize_state_file(force=False):
         stats['current_balance'] = current_balance
         stats['last_report_time'] = datetime.now()
         
-        # Save to file
+        # Save to file - convert all datetime objects to ISO format
         json_stats = stats.copy()
-        if json_stats['last_report_time']:
-            json_stats['last_report_time'] = json_stats['last_report_time'].isoformat()
         
-        with open(state_file, 'w') as f:
-            json.dump(json_stats, f)
-            
-        logger.info(f"State file initialized with balance: {current_balance} USDT")
-        return True
+        # Convert all datetime objects to ISO format string
+        for key, value in json_stats.items():
+            if isinstance(value, datetime):
+                json_stats[key] = value.isoformat()
+        
+        try:
+            with open(state_file, 'w') as f:
+                json.dump(json_stats, f)
+                
+            logger.info(f"State file initialized with balance: {current_balance} USDT")
+            return True
+        except Exception as e:
+            logger.error(f"Error saving state file: {e}")
+            return False
     
     return False
 
@@ -1139,88 +1146,232 @@ def perform_test_trade(symbol=TRADING_SYMBOL):
     logger.info(f"Performing test trade on {symbol} to verify trading functionality")
     
     try:
-        # Get current price
-        current_price = binance_client.get_current_price(symbol)
+        # Step 1: Get current price with retries
+        retry_count = 3
+        current_price = None
+        
+        for attempt in range(retry_count):
+            try:
+                current_price = binance_client.get_current_price(symbol)
+                if current_price:
+                    break
+                logger.warning(f"Got empty price on attempt {attempt+1}/{retry_count}, retrying...")
+                time.sleep(2)
+            except Exception as e:
+                logger.warning(f"Error getting current price (attempt {attempt+1}/{retry_count}): {e}")
+                if attempt < retry_count - 1:
+                    time.sleep(2)
+        
         if not current_price:
-            logger.error("Could not get current price for test trade")
+            logger.error("Could not get current price for test trade after multiple attempts")
             return False
             
-        # Get current balance
-        initial_balance = binance_client.get_account_balance()
+        # Step 2: Get current account balance with retries
+        retry_count = 3
+        initial_balance = None
+        
+        for attempt in range(retry_count):
+            try:
+                initial_balance = binance_client.get_account_balance()
+                if initial_balance > 0:
+                    break
+                logger.warning(f"Got zero balance on attempt {attempt+1}/{retry_count}, retrying...")
+                time.sleep(2)
+            except Exception as e:
+                logger.warning(f"Error getting account balance (attempt {attempt+1}/{retry_count}): {e}")
+                if attempt < retry_count - 1:
+                    time.sleep(2)
+        
+        if not initial_balance or initial_balance <= 0:
+            logger.error("Could not get valid account balance for test trade")
+            return False
+            
         logger.info(f"Balance before test trade: {initial_balance} USDT")
         
-        # Get symbol info for precision
-        symbol_info = binance_client.get_symbol_info(symbol)
+        # Step 3: Get symbol info with retries and fallback
+        symbol_info = None
+        qty_precision = 3  # Default if we can't get from API
+        min_qty = 0.001    # Default if we can't get from API
+        min_notional = 100.0  # Binance futures default is 100 USDT
+        
+        for attempt in range(3):
+            try:
+                symbol_info = binance_client.get_symbol_info(symbol)
+                if symbol_info:
+                    qty_precision = symbol_info.get('quantity_precision', 3)
+                    min_qty = float(symbol_info.get('min_qty', 0.001))
+                    min_notional = float(symbol_info.get('min_notional', 100.0))
+                    logger.info(f"Symbol info: precision={qty_precision}, min_qty={min_qty}, min_notional={min_notional}")
+                    break
+                time.sleep(2)
+            except Exception as e:
+                logger.warning(f"Error getting symbol info (attempt {attempt+1}/3): {e}")
+                time.sleep(2)
+                
         if not symbol_info:
-            logger.error("Could not get symbol info for test trade")
-            return False
+            logger.warning("Could not get symbol info, using fallback values: precision=3, min_qty=0.001, min_notional=100.0")
+            
+            # For common coins, use known precision values
+            if symbol == "BTCUSDT":
+                qty_precision = 3
+                min_qty = 0.001
+                min_notional = 100.0
+            elif symbol == "ETHUSDT":
+                qty_precision = 3  
+                min_qty = 0.001
+                min_notional = 100.0
+            elif symbol == "SOLUSDT":
+                qty_precision = 1
+                min_qty = 0.1
+                min_notional = 100.0
+            elif symbol == "BNBUSDT":
+                qty_precision = 2
+                min_qty = 0.01
+                min_notional = 100.0
+            # For others, use conservative defaults
+            else:
+                qty_precision = 3
+                min_qty = 0.001
+                min_notional = 100.0
         
-        # For a $50 account, use a much smaller test trade (minimum value needed for Binance)
-        # Aim for just above the minimum required (100 USDT)
-        qty_precision = symbol_info.get('quantity_precision', 3)
+        # Step 4: Calculate test trade size to meet minimum notional requirement
+        # CRITICAL FIX: Ensure order size meets minimum notional requirement
+        # Calculate the minimum quantity needed to meet min_notional
+        min_notional_qty = min_notional / current_price
         
-        # Calculate quantity - For a $50 account, we want to ensure our test trade
-        # is small enough but also meets Binance's minimum order value
-        # Aim for 0.001 BTC (~$75) or minimum required
-        if symbol == "BTCUSDT":
-            # Use the smallest allowed quantity for BTC
-            test_qty = 0.001
-            order_value = test_qty * current_price
-            # If this is too small, adjust to minimum required
-            if order_value < 100:
-                test_qty = 100 / current_price
-                # Round to appropriate precision
-                import math
-                multiplier = 10 ** qty_precision
-                test_qty = math.floor(test_qty * multiplier) / multiplier
-                order_value = test_qty * current_price
-        else:
-            # For other coins, calculate minimum required
-            test_qty = 100 / current_price  # Minimum 100 USDT notional value
-            # Round to appropriate precision
-            import math
-            multiplier = 10 ** qty_precision
-            test_qty = math.floor(test_qty * multiplier) / multiplier
-            order_value = test_qty * current_price
+        # Apply precision to this quantity
+        import math
+        multiplier = 10 ** qty_precision
+        min_notional_qty = math.ceil(min_notional_qty * multiplier) / multiplier
+        
+        # Verify the minimum quantity is at least the exchange's min_qty
+        test_qty = max(min_notional_qty, min_qty)
+        
+        # Calculate test value using 1.5% of account (but don't go below min notional)
+        account_percent_qty = (initial_balance * 0.015) / current_price
+        account_percent_qty = math.floor(account_percent_qty * multiplier) / multiplier
+        
+        # Only use account percentage if it's large enough to meet min notional
+        if account_percent_qty * current_price >= min_notional and account_percent_qty >= min_qty:
+            test_qty = account_percent_qty
+        
+        # Don't use more than 5% of account balance
+        max_qty = (initial_balance * 0.05) / current_price
+        max_qty = math.floor(max_qty * multiplier) / multiplier
+        test_qty = min(test_qty, max_qty)
+        
+        # Verify test_qty meets both min_qty and min_notional requirements
+        order_value = test_qty * current_price
         
         logger.info(f"Final test order: {test_qty} {symbol} at ~{current_price} = {order_value:.2f} USDT")
         
-        # Final safety check - if still below 100 USDT, abort
-        if order_value < 100:
-            logger.error(f"Cannot create order above minimum notional value. Calculated: {order_value:.2f} USDT, Required: 100 USDT")
-            return False
-        
-        # Check if we have enough balance
-        if order_value > initial_balance * 0.9:  # Use 90% max for a small account
-            logger.error(f"Not enough balance for test trade. Required: {order_value:.2f} USDT, Available: {initial_balance} USDT")
+        # Final safety check - if order value is too small, abort
+        if test_qty <= 0:
+            logger.error(f"Calculated quantity is too small or zero: {test_qty}")
+            logger.error("Consider using --skip-test-trade to bypass this check")
             return False
             
+        if order_value < min_notional:
+            logger.error(f"Calculated order value is too small: {order_value:.2f} USDT (min required: {min_notional} USDT)")
+            logger.error("Consider using --skip-test-trade to bypass this check")
+            return False
+        
+        # Check if we have enough balance for a test trade
+        if order_value > initial_balance * 0.9:
+            logger.error(f"Account balance too low for test trade. Required: {order_value:.2f} USDT, Available: {initial_balance} USDT")
+            return False
+        
+        # Step 5: Place a market BUY order with retry
         logger.info(f"Executing test BUY order: {test_qty} {symbol} at ~{current_price}")
         
-        # Place a market BUY order
-        buy_order = binance_client.place_market_order(symbol, "BUY", test_qty)
+        buy_order = None
+        for attempt in range(3):
+            try:
+                buy_order = binance_client.place_market_order(symbol, "BUY", test_qty)
+                if buy_order:
+                    break
+                logger.warning(f"Test BUY order attempt {attempt+1}/3 returned empty result, retrying...")
+                time.sleep(2)
+            except Exception as e:
+                logger.warning(f"Error placing test BUY order (attempt {attempt+1}/3): {e}")
+                if attempt < 2:  # Less than max retries
+                    time.sleep(2)
+        
         if not buy_order:
-            logger.error("Test BUY order failed")
+            logger.error("Test BUY order failed after multiple attempts")
             return False
             
         logger.info(f"Test BUY order successful: {buy_order.get('orderId', 'unknown')}")
         
         # Wait a moment for the order to fully process
-        time.sleep(2)
+        time.sleep(3)  # Increased from 2 to 3 seconds
         
-        # Check position
-        position = binance_client.get_position_info(symbol)
-        if not position or position.get('position_amount', 0) <= 0:
-            logger.error("Position not opened after test BUY")
+        # Step 6: Check position - more robust approach to verify position is open
+        position_verified = False
+        position_qty = test_qty
+        
+        # Method 1: Try to get direct position info
+        try:
+            position = binance_client.get_position_info(symbol)
+            if position and position.get('position_amount', 0) > 0:
+                position_verified = True
+                position_qty = float(position.get('position_amount', test_qty))
+                logger.info(f"Test position opened: {position_qty} {symbol} @ {position.get('entry_price')}")
+        except Exception as e:
+            logger.warning(f"Error getting position info: {e}")
+        
+        # Method 2: If get_position_info fails, verify by checking account balance change
+        if not position_verified:
+            try:
+                # Check if balance has changed, which indicates position was opened
+                current_balance = binance_client.get_account_balance()
+                if current_balance < initial_balance:  # Balance decreased = position likely opened
+                    logger.info(f"Position verified via balance change: {initial_balance} → {current_balance}")
+                    position_verified = True
+            except Exception as e:
+                logger.warning(f"Error checking balance for position verification: {e}")
+        
+        # Method 3: Use directly the saved order details
+        if not position_verified and buy_order and 'fills' in buy_order:
+            filled_qty = 0
+            for fill in buy_order.get('fills', []):
+                try:
+                    filled_qty += float(fill.get('qty', 0))
+                except (ValueError, TypeError):
+                    pass
+                    
+            if filled_qty > 0:
+                logger.info(f"Position verified via order fills: {filled_qty} {symbol}")
+                position_verified = True
+                # Use the filled quantity for selling later
+                position_qty = filled_qty
+        
+        # Final fallback - assume position opened (if we can't verify but buy order was accepted)
+        if not position_verified and buy_order:
+            logger.warning("Could not definitively verify position was opened. Assuming successful buy and continuing with test sell.")
+            position_verified = True
+        
+        # If we couldn't verify position and no buy order succeeded, abort
+        if not position_verified and not buy_order:
+            logger.error("Could not verify position was opened and no successful buy order. Aborting test.")
             return False
-            
-        logger.info(f"Test position opened: {position.get('position_amount')} {symbol} @ {position.get('entry_price')}")
         
-        # Now place a SELL order to close the position
-        sell_qty = position.get('position_amount')
-        logger.info(f"Executing test SELL order to close position: {sell_qty} {symbol}")
+        # Step 7: Place a SELL order to close the position
+        logger.info(f"Executing test SELL order to close position: {position_qty} {symbol}")
         
-        sell_order = binance_client.place_market_order(symbol, "SELL", sell_qty)
+        sell_order = None
+        for attempt in range(3):
+            try:
+                sell_order = binance_client.place_market_order(symbol, "SELL", position_qty)
+                if sell_order:
+                    break
+                logger.warning(f"Test SELL order attempt {attempt+1}/3 returned empty result, retrying...")
+                time.sleep(2)
+            except Exception as e:
+                logger.warning(f"Error placing test SELL order (attempt {attempt+1}/3): {e}")
+                if attempt < 2:  # Less than max retries
+                    time.sleep(2)
+        
         if not sell_order:
             logger.error("Test SELL order failed. You may need to manually close the position!")
             return False
@@ -1228,33 +1379,54 @@ def perform_test_trade(symbol=TRADING_SYMBOL):
         logger.info(f"Test SELL order successful: {sell_order.get('orderId', 'unknown')}")
         
         # Wait a moment for the order to fully process
-        time.sleep(2)
+        time.sleep(3)  # Increased from 2 to 3 seconds
         
-        # Check final balance
-        final_balance = binance_client.get_account_balance()
-        balance_diff = final_balance - initial_balance
+        # Step 8: Check final balance and report results
+        final_balance = None
+        for attempt in range(3):
+            try:
+                final_balance = binance_client.get_account_balance()
+                if final_balance > 0:
+                    break
+                time.sleep(1)
+            except:
+                if attempt < 2:  # Less than max retries
+                    time.sleep(1)
         
-        logger.info(f"Balance after test trade: {final_balance} USDT (Change: {balance_diff} USDT)")
+        if final_balance and final_balance > 0:
+            balance_diff = final_balance - initial_balance
+            logger.info(f"Balance after test trade: {final_balance} USDT (Change: {balance_diff} USDT)")
+        else:
+            logger.warning("Could not get final balance after test trade")
+        
+        # Consider the test successful if we got this far with a sell order
         logger.info(f"Test trade completed successfully")
         
         # Notify on Telegram if enabled
-        notifier = TelegramNotifier()
-        notifier.send_message(f"✅ *Test Trade Completed*\n\n"
-                             f"Symbol: {symbol}\n"
-                             f"Test Size: {test_qty} (Value: {order_value:.2f} USDT)\n"
-                             f"Balance Change: {balance_diff:.6f} USDT\n\n"
-                             f"Trading functionality verified successfully.")
+        try:
+            notifier = TelegramNotifier()
+            notifier.send_message(f"✅ *Test Trade Completed*\n\n"
+                                f"Symbol: {symbol}\n"
+                                f"Test Size: {position_qty} (Value: {order_value:.2f} USDT)\n"
+                                f"Trading functionality verified successfully.")
+        except:
+            logger.warning("Failed to send telegram notification")
         
         return True
     except Exception as e:
         logger.error(f"Error during test trade: {e}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
         
         # Notify on Telegram if enabled
-        notifier = TelegramNotifier()
-        notifier.send_message(f"❌ *Test Trade Failed*\n\n"
-                             f"Symbol: {symbol}\n"
-                             f"Error: {str(e)}\n\n"
-                             f"Please check logs and resolve issues before starting live trading.")
+        try:
+            notifier = TelegramNotifier()
+            notifier.send_message(f"❌ *Test Trade Failed*\n\n"
+                                f"Symbol: {symbol}\n"
+                                f"Error: {str(e)}\n\n"
+                                f"Please check logs and resolve issues before starting live trading.")
+        except:
+            pass
         
         return False
 

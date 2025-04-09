@@ -210,14 +210,17 @@ class BinanceClient:
                 positions = self.client.futures_position_information()
                 for position in positions:
                     if position['symbol'] == symbol:
-                        return {
+                        # Create a position data structure with safe access to fields
+                        position_data = {
                             'symbol': position['symbol'],
-                            'position_amount': float(position['positionAmt']),
-                            'entry_price': float(position['entryPrice']),
-                            'unrealized_profit': float(position['unRealizedProfit']),
-                            'leverage': int(position['leverage']),
-                            'isolated': position['isolated'],
+                            'position_amount': float(position.get('positionAmt', 0)),
+                            'entry_price': float(position.get('entryPrice', 0)),
+                            'unrealized_profit': float(position.get('unRealizedProfit', 0)),
+                            # Use get() with default value to avoid KeyError for missing fields
+                            'leverage': int(position.get('leverage', 1)),
+                            'isolated': position.get('isolated', False),
                         }
+                        return position_data
                 return None
             except Exception as e:
                 error_str = str(e)
