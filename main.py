@@ -227,9 +227,16 @@ def setup():
     # If we still have zero balance, try loading from config
     if stats['start_balance'] <= 0:
         # Use the initial balance from config as fallback
-        stats['start_balance'] = INITIAL_BALANCE
-        stats['current_balance'] = INITIAL_BALANCE
-        logger.warning(f"Failed to get balance from API, using configured balance: {INITIAL_BALANCE} USDT")
+        try:
+            from modules.config import INITIAL_BALANCE
+            stats['start_balance'] = INITIAL_BALANCE
+            stats['current_balance'] = INITIAL_BALANCE
+            logger.warning(f"Failed to get balance from API, using configured balance: {INITIAL_BALANCE} USDT")
+        except ImportError:
+            # Default if INITIAL_BALANCE not in config
+            stats['start_balance'] = 50.0
+            stats['current_balance'] = 50.0
+            logger.warning("Failed to get balance from API and no INITIAL_BALANCE in config. Using default: 50.0 USDT")
     
     stats['last_report_time'] = datetime.now()
     
@@ -241,6 +248,7 @@ def setup():
     notifier.send_message(f"🤖 *Trading Bot Started*\n"
                          f"Symbol: {TRADING_SYMBOL}\n"
                          f"Strategy: {strategy.strategy_name}\n"
+                         f"Timeframe: {TIMEFRAME}\n"
                          f"Starting Balance: {stats['start_balance']} USDT\n"
                          f"Auto-Compound: {'Enabled' if AUTO_COMPOUND else 'Disabled'}\n"
                          f"Using WebSocket for real-time data!")
@@ -304,14 +312,17 @@ def initialize_state_file(force=False):
     return False
 
 
-def initialize_klines_data():
+def initialize_klines_data(timeframe=None):
     """Initialize klines data with historical data from REST API"""
     global klines_data
+    
+    # Use provided timeframe or fall back to config default
+    tf = timeframe or TIMEFRAME
     
     try:
         klines = binance_client.get_historical_klines(
             symbol=TRADING_SYMBOL,
-            interval=TIMEFRAME,
+            interval=tf,
             start_str="2 days ago",
             limit=200
         )
@@ -321,7 +332,7 @@ def initialize_klines_data():
             return
             
         klines_data[TRADING_SYMBOL] = klines
-        logger.info(f"Initialized historical data with {len(klines)} candles")
+        logger.info(f"Initialized historical data with {len(klines)} candles using timeframe {tf}")
     except Exception as e:
         logger.error(f"Error initializing klines data: {e}")
 
@@ -1468,6 +1479,7 @@ def main():
     parser.add_argument('--start-date', type=str, help='Start date for backtest (YYYY-MM-DD)')
     parser.add_argument('--end-date', type=str, help='End date for backtest (YYYY-MM-DD)')
     parser.add_argument('--symbol', type=str, default=TRADING_SYMBOL, help='Trading symbol for backtest')
+    parser.add_argument('--timeframe', type=str, default=TIMEFRAME, help='Timeframe for trading (e.g. 1m, 5m, 15m, 1h)')
     parser.add_argument('--strategy', type=str, default=STRATEGY, help='Strategy for backtest')
     parser.add_argument('--report', action='store_true', help='Generate performance report only')
     parser.add_argument('--interval', type=int, default=5, help='Trading check interval in minutes')
@@ -1493,7 +1505,7 @@ def main():
     
     if args.backtest:
         start_date = args.start_date or "1 year ago"
-        run_backtest(args.symbol, TIMEFRAME, args.strategy, start_date, args.end_date)
+        run_backtest(args.symbol, args.timeframe, args.strategy, start_date, args.end_date)
         return
     
     if args.report:
@@ -1516,7 +1528,7 @@ def main():
         logger.info("Running strategy validation before starting live trading")
         is_valid, message = run_safety_backtest(
             symbol=args.symbol or TRADING_SYMBOL,
-            timeframe=TIMEFRAME,
+            timeframe=args.timeframe,
             strategy_name=args.strategy or STRATEGY
         )
         
