@@ -1,0 +1,21 @@
+{
+    "strategy": "SmallCap",
+    "symbol": "XRPUSDT",
+    "timeframe": "15m",
+    "start_date": "2025-03-10",
+    "end_date": "2025-04-09",
+    "initial_balance": 50.0,
+    "final_balance": 3.069867479860789e+23,
+    "total_return": 6.139734959721578e+23,
+    "total_return_amt": 3.069867479860789e+23,
+    "total_trades": 195,
+    "winning_trades": 0,
+    "losing_trades": 195,
+    "win_rate": 0.0,
+    "max_drawdown": 6.999900643397485,
+    "sharpe_ratio": 6.969733549709668,
+    "leverage": 20,
+    "risk_per_trade": 1.0,
+    "commission_rate": 0.04,
+    "auto_compound": true
+}

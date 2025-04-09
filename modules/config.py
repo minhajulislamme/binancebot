@@ -25,14 +25,14 @@ else:
 RECV_WINDOW = int(os.getenv('BINANCE_RECV_WINDOW', '10000'))
 
 # Trading parameters
-TRADING_SYMBOL = os.getenv('TRADING_SYMBOL', 'BTCUSDT')  # Default trading pair
+TRADING_SYMBOL = os.getenv('TRADING_SYMBOL', 'ADAUSDT')  # Changed to ADA as default
 TRADING_TYPE = 'FUTURES'  # Use futures trading
-LEVERAGE = int(os.getenv('LEVERAGE', '5'))  # Default leverage 5x
+LEVERAGE = int(os.getenv('LEVERAGE', '10'))  # Increased from 5x to 10x for small account
 MARGIN_TYPE = os.getenv('MARGIN_TYPE', 'ISOLATED')  # ISOLATED or CROSSED
 
 # Position sizing
 INITIAL_BALANCE = float(os.getenv('INITIAL_BALANCE', '50.0'))  # Starting with $50
-RISK_PER_TRADE = float(os.getenv('RISK_PER_TRADE', '0.02'))  # 2% risk per trade
+RISK_PER_TRADE = float(os.getenv('RISK_PER_TRADE', '0.01'))  # Reduced to 1% risk per trade
 MAX_OPEN_POSITIONS = int(os.getenv('MAX_OPEN_POSITIONS', '1'))
 
 # Auto-compounding settings
@@ -41,20 +41,20 @@ COMPOUND_REINVEST_PERCENT = float(os.getenv('COMPOUND_REINVEST_PERCENT', '0.75')
 COMPOUND_INTERVAL = os.getenv('COMPOUND_INTERVAL', 'DAILY')  # Can be TRADE, DAILY, WEEKLY
 
 # Strategy parameters
-STRATEGY = os.getenv('STRATEGY', 'RSI_EMA')  # Default strategy
-RSI_PERIOD = int(os.getenv('RSI_PERIOD', '14'))
+STRATEGY = os.getenv('STRATEGY', 'SmallCap')  # Changed to our new SmallCap strategy
+RSI_PERIOD = int(os.getenv('RSI_PERIOD', '10'))  # Shortened RSI period
 RSI_OVERBOUGHT = int(os.getenv('RSI_OVERBOUGHT', '70'))
 RSI_OVERSOLD = int(os.getenv('RSI_OVERSOLD', '30'))
-FAST_EMA = int(os.getenv('FAST_EMA', '9'))
+FAST_EMA = int(os.getenv('FAST_EMA', '8'))  # Faster EMA for quicker signals
 SLOW_EMA = int(os.getenv('SLOW_EMA', '21'))
 TIMEFRAME = os.getenv('TIMEFRAME', '15m')  # Default timeframe
 
 # Risk management
 USE_STOP_LOSS = os.getenv('USE_STOP_LOSS', 'True').lower() == 'true'
-STOP_LOSS_PCT = float(os.getenv('STOP_LOSS_PCT', '0.03'))  # 3% stop loss
+STOP_LOSS_PCT = float(os.getenv('STOP_LOSS_PCT', '0.025'))  # Tightened to 2.5% stop loss
 USE_TAKE_PROFIT = os.getenv('USE_TAKE_PROFIT', 'True').lower() == 'true'
-TAKE_PROFIT_PCT = float(os.getenv('TAKE_PROFIT_PCT', '0.06'))  # 6% take profit
-TRAILING_STOP = os.getenv('TRAILING_STOP', 'False').lower() == 'true'
+TAKE_PROFIT_PCT = float(os.getenv('TAKE_PROFIT_PCT', '0.05'))  # Reduced to 5% take profit
+TRAILING_STOP = os.getenv('TRAILING_STOP', 'True').lower() == 'true'  # Enabled trailing stop
 TRAILING_STOP_PCT = float(os.getenv('TRAILING_STOP_PCT', '0.015'))  # 1.5% trailing stop
 
 # Backtesting parameters

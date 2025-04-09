@@ -5,3 +5,29 @@
 ./setup_cron.sh
 ./check_bot_status.sh
 104.248.155.109
+
+python main.py --small-account --skip-validation
+
+python main.py --small-account --skip-validation --symbol XRPUSDT
+
+# ADA backtest for last 30 days
+python main.py --backtest --symbol ADAUSDT --strategy SmallCap --start-date "30 days ago"
+
+# XRP backtest for last 30 days
+python3 main.py --backtest --symbol XRPUSDT --strategy SmallCap --start-date "30 days ago"
+
+# DOGE backtest for last 30 days
+python main.py --backtest --symbol DOGEUSDT --strategy SmallCap --start-date "30 days ago"
+
+# For more comprehensive backtesting
+python main.py --backtest --symbol ADAUSDT --strategy SmallCap --start-date "90 days ago"
+
+python main.py --small-account --symbol YOURCHOICE --strategy SmallCap
+
+python3 main.py --backtest --symbol ADAUSDT --strategy SmallCap --start-date "30 days ago"
+
+python3 main.py --test-trade --symbol ADAUSDT --strategy SmallCap --small-account --skip-validation
+
+python3 main.py --symbol ADAUSDT --strategy SmallCap --small-account --skip-validation
+
+python3 main.py --symbol XRPUSDT --strategy SmallCap --skip-validation

@@ -526,13 +526,15 @@ def on_order_update(order_data):
                 save_trade(trade_data)
                 
                 # Show current account balance after trade
+                current_balance = stats['current_balance']
                 try:
                     current_balance = binance_client.get_account_balance()
+                    stats['current_balance'] = current_balance
                     logger.info(f"💰 ACCOUNT BALANCE: {current_balance:.2f} USDT 💰")
-                except:
-                    pass
+                except Exception as e:
+                    logger.error(f"Failed to get account balance after trade: {e}")
                 
-                # Send notification
+                # Send detailed notification with trade info and account status
                 notifier = TelegramNotifier()
                 
                 if side == 'BUY':
@@ -540,14 +542,29 @@ def on_order_update(order_data):
                 else:
                     message = f"🔴 *Position Closed*\n"
                     
+                # Basic trade info
                 message += f"Symbol: {symbol}\n" \
                           f"Side: {side}\n" \
                           f"Quantity: {filled_qty}\n" \
                           f"Price: {price}\n"
                           
-                if realized_profit != 0:
-                    message += f"Realized P/L: {realized_profit:.2f} USDT\n"
-                    
+                # Add profit/loss info if applicable
+                if realized_profit > 0:
+                    message += f"Realized Profit: +{realized_profit:.2f} USDT 🎯\n"
+                elif realized_profit < 0:
+                    message += f"Realized Loss: {realized_profit:.2f} USDT 📉\n"
+                
+                # Add current account info
+                message += f"\n*Account Status:*\n" \
+                          f"Current Balance: {current_balance:.2f} USDT\n" \
+                          f"Total Trades: {stats['total_trades']}\n" \
+                          f"Win Rate: {(stats['winning_trades'] / stats['total_trades'] * 100) if stats['total_trades'] > 0 else 0:.1f}%\n"
+                
+                # Add API & WebSocket status
+                ws_status = "Connected" if websocket_manager and websocket_manager.is_connected() else "Disconnected"
+                message += f"\n*Connection Status:*\n" \
+                          f"WebSocket: {ws_status}"
+                
                 notifier.send_message(message)
         else:
             # For other order statuses, just log basic info
@@ -1265,18 +1282,30 @@ def perform_test_trade(symbol=TRADING_SYMBOL):
         
         logger.info(f"Final test order: {test_qty} {symbol} at ~{current_price} = {order_value:.2f} USDT")
         
-        # Final safety check - if order value is too small, abort
+        # Final safety check - if order value is too small, adjust to minimum required
         if test_qty <= 0:
-            logger.error(f"Calculated quantity is too small or zero: {test_qty}")
-            logger.error("Consider using --skip-test-trade to bypass this check")
-            return False
+            logger.warning(f"Calculated quantity is too small or zero: {test_qty}")
+            logger.info("Automatically using minimum quantity required")
+            test_qty = min_qty
+            order_value = test_qty * current_price
             
         if order_value < min_notional:
-            logger.error(f"Calculated order value is too small: {order_value:.2f} USDT (min required: {min_notional} USDT)")
-            logger.error("Consider using --skip-test-trade to bypass this check")
-            return False
+            logger.warning(f"Calculated order value is too small: {order_value:.2f} USDT (min required: {min_notional} USDT)")
+            logger.info("Automatically adjusting order quantity to meet minimum notional requirement")
+            
+            # Calculate the minimum quantity needed to meet min_notional requirement
+            test_qty = min_notional / current_price
+            # Apply precision
+            multiplier = 10 ** qty_precision
+            test_qty = math.ceil(test_qty * multiplier) / multiplier
+            # Make sure it meets min_qty requirement too
+            test_qty = max(test_qty, min_qty)
+            # Recalculate order value with adjusted quantity
+            order_value = test_qty * current_price
+            
+            logger.info(f"Adjusted test order: {test_qty} {symbol} at ~{current_price} = {order_value:.2f} USDT")
         
-        # Check if we have enough balance for a test trade
+        # Check if we have enough balance for the test trade
         if order_value > initial_balance * 0.9:
             logger.error(f"Account balance too low for test trade. Required: {order_value:.2f} USDT, Available: {initial_balance} USDT")
             return False
@@ -1444,7 +1473,7 @@ def main():
     parser.add_argument('--interval', type=int, default=5, help='Trading check interval in minutes')
     parser.add_argument('--skip-validation', action='store_true', help='Skip strategy validation before live trading')
     parser.add_argument('--skip-test-trade', action='store_true', help='Skip test trade before live trading')
-    parser.add_argument('--small-account', action='store_true', help='Run with small account (under $100) - skips test trade and uses adjusted risk')
+    parser.add_argument('--small-account', action='store_true', help='Run with small account (under $45) - skips test trade and uses adjusted risk')
     parser.add_argument('--force-balance', action='store_true', help='Force initialization of balance from config file')
     args = parser.parse_args()
     
@@ -1517,7 +1546,7 @@ def main():
         if not perform_test_trade():
             logger.error("Test trade failed. Aborting live trading.")
             logger.error("Use --skip-test-trade to bypass this check")
-            logger.error("For small accounts (under $100), use --small-account flag")
+            logger.error("For small accounts (under $45), use --small-account flag")
             return
     
     loaded_stats = load_state()
@@ -1530,10 +1559,11 @@ def main():
     logger.info(f"Trading pair: {TRADING_SYMBOL}")
     logger.info(f"Strategy: {strategy.strategy_name}")
     logger.info(f"Daily reports: {'Enabled' if SEND_DAILY_REPORT else 'Disabled'}")
+    logger.info(f"Status reports: Every 2 hours")
     logger.info(f"Press Ctrl+C to stop the bot")
     
     schedule.every().hour.do(save_state)
-    schedule.every(6).hours.do(send_status_report)
+    schedule.every(2).hours.do(send_status_report)  # Changed from 6 hours to 2 hours
     
     if SEND_DAILY_REPORT:
         schedule.every().day.at(DAILY_REPORT_TIME).do(send_daily_report)
