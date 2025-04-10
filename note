@@ -5,6 +5,8 @@
 ./setup_cron.sh
 ./check_bot_status.sh
 104.248.155.109
+source venv/bin/activate  # or whatever your venv folder is named
+pip install tqdm
 
 python main.py --small-account --skip-validation
 
