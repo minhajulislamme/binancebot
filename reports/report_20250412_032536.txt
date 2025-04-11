@@ -1,0 +1,16 @@
+
+    ===== PERFORMANCE REPORT =====
+    Time: 2025-04-12 03:25:36.000842
+    
+    Starting Balance: 9483.60 USDT
+    Current Balance: 55.14 USDT
+    
+    Total Profit/Loss: -9428.46 USDT (-99.42%)
+    Daily Profit/Loss: 0.00 USDT (0.00%)
+    
+    Total Trades: 2
+    Winning Trades: 0
+    Losing Trades: 1
+    
+    Win Rate: 0.00%
+    

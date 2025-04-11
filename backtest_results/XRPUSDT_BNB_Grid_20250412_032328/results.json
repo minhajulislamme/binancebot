@@ -1,0 +1,21 @@
+{
+    "strategy": "BNB_Grid",
+    "symbol": "XRPUSDT",
+    "timeframe": "15m",
+    "start_date": "2025-03-13",
+    "end_date": "2025-04-12",
+    "initial_balance": 50.0,
+    "final_balance": 87794466.29963166,
+    "total_return": 175588832.5992633,
+    "total_return_amt": 87794416.29963166,
+    "total_trades": 43,
+    "winning_trades": 26,
+    "losing_trades": 17,
+    "win_rate": 60.46511627906976,
+    "max_drawdown": 11.189954744403401,
+    "sharpe_ratio": 3.287721804864093,
+    "leverage": 10,
+    "risk_per_trade": 1.0,
+    "commission_rate": 0.04,
+    "auto_compound": true
+}
