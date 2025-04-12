@@ -8,3 +8,4 @@ websocket-client>=1.2.1
 matplotlib>=3.5.0
 ccxt>=2.0.0
 requests>=2.26.0
+tqdm>=4.62.0
