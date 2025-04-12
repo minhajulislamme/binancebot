@@ -44,4 +44,12 @@ python3 main.py --symbol XRPUSDT --strategy XRP_Scalping --timeframe 3m
 python3 main.py --symbol DOGEUSDT --strategy DOGE_Scalping --timeframe 5m
 python3 main.py --symbol SHIBUSDT --strategy SHIB_Breakout --timeframe 5m
 
-python3 main.py --backtest --symbol XRPUSDT --strategy BNB_Grid --timeframe 15m --start-date "30 days ago"
+python3 main.py --backtest --symbol BNBUSDT --strategy BNB_Grid --timeframe 15m --start-date "30 days ago"
+python3 main.py --backtest --symbol XRPUSDT --strategy XRP_Scalping --timeframe 15m --start-date "30 days ago"
+python3 main.py --backtest --symbol DOGEUSDT --strategy DOGE_Scalping --timeframe 15m --start-date "30 days ago"
+python3 main.py --backtest --symbol ADAUSDT --strategy ADA_EMATrend --timeframe 15m --start-date "30 days ago"
+python3 main.py --backtest --symbol SOLUSDT --strategy SOL_Squeeze --timeframe 5m --start-date "30 days ago"
+sudo adduser username
+sudo usermod -aG sudo username
+
+python3 backtest_all_coins.py --coins BNB

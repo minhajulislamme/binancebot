@@ -71,7 +71,7 @@ def main():
         if symbol in ['BTCUSDT', 'XRPUSDT', 'DOGEUSDT']:
             timeframes = ['1m', '3m', '5m']
         elif symbol in ['ETHUSDT', 'BNBUSDT']:
-            timeframes = ['15m', '30m', '1h']
+            timeframes = ['1m', '3m', '5m','15m', '30m', '1h']
         elif symbol in ['SOLUSDT', 'ADAUSDT', 'SHIBUSDT']:
             timeframes = ['5m', '15m']
         else:
