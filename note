@@ -53,3 +53,14 @@ sudo adduser username
 sudo usermod -aG sudo username
 
 python3 backtest_all_coins.py --coins BNB
+
+
+No config updates to processes
+✅ Setup completed successfully!
+📊 To start the bot: /home/minhaz/binancebot/start_bot.sh
+🛑 To stop the bot: /home/minhaz/binancebot/stop_bot.sh
+ℹ️  To check status: /home/minhaz/binancebot/check_status.sh
+💾 To backup data: /home/minhaz/binancebot/backup_data.sh
+
+Current bot status:
+binancebot                       STARTING  
