@@ -665,7 +665,7 @@ def check_for_signals(symbol=None):
                         
                         if stop_loss_price:
                             binance_client.place_stop_loss_order(
-                                symbol, "BUY", quantity, new_stop
+                                symbol, "BUY", quantity, stop_loss_price
                             )
                             
                         take_profit_price = risk_manager.calculate_take_profit(symbol, "SELL", current_price)
