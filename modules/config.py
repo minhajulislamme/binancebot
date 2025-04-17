@@ -53,9 +53,11 @@ TIMEFRAME = os.getenv('TIMEFRAME', '15m')  # Default timeframe
 USE_STOP_LOSS = os.getenv('USE_STOP_LOSS', 'True').lower() == 'true'
 STOP_LOSS_PCT = float(os.getenv('STOP_LOSS_PCT', '0.025'))  # Tightened to 2.5% stop loss
 USE_TAKE_PROFIT = os.getenv('USE_TAKE_PROFIT', 'True').lower() == 'true'
-TAKE_PROFIT_PCT = float(os.getenv('TAKE_PROFIT_PCT', '0.05'))  # Reduced to 5% take profit
+TAKE_PROFIT_PCT = float(os.getenv('TAKE_PROFIT_PCT', '0.08'))  # Reduced to 8% take profit
 TRAILING_STOP = os.getenv('TRAILING_STOP', 'True').lower() == 'true'  # Enabled trailing stop
 TRAILING_STOP_PCT = float(os.getenv('TRAILING_STOP_PCT', '0.015'))  # 1.5% trailing stop
+TRAILING_TAKE_PROFIT = os.getenv('TRAILING_TAKE_PROFIT', 'True').lower() == 'true'
+TRAILING_TAKE_PROFIT_PCT = float(os.getenv('TRAILING_TAKE_PROFIT_PCT', '0.04'))
 
 # Backtesting parameters
 BACKTEST_START_DATE = os.getenv('BACKTEST_START_DATE', '2023-01-01')

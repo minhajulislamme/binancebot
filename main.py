@@ -682,14 +682,32 @@ def check_for_signals(symbol=None):
                 symbol, side, current_price, position
             )
             
-            if new_stop:
+            # Add trailing take profit functionality
+            new_take_profit = risk_manager.adjust_take_profit_for_trailing(
+                symbol, side, current_price, position
+            )
+            
+            # If either stop loss or take profit needs updating
+            if new_stop or new_take_profit:
+                # Cancel all existing orders first
                 binance_client.cancel_all_open_orders(symbol)
                 
+                # Always place new stop loss
+                stop_loss_price = new_stop if new_stop else risk_manager.calculate_stop_loss(symbol, side, current_price)
                 binance_client.place_stop_loss_order(
-                    symbol, opposite_side, abs(position['position_amount']), new_stop
+                    symbol, opposite_side, abs(position['position_amount']), stop_loss_price
                 )
                 
-                logger.info(f"Updated trailing stop loss to {new_stop}")
+                # Always place new take profit
+                take_profit_price = new_take_profit if new_take_profit else risk_manager.calculate_take_profit(symbol, side, current_price)
+                binance_client.place_take_profit_order(
+                    symbol, opposite_side, abs(position['position_amount']), take_profit_price
+                )
+                
+                if new_stop:
+                    logger.info(f"Updated trailing stop loss to {stop_loss_price}")
+                if new_take_profit:
+                    logger.info(f"Updated trailing take profit to {take_profit_price}")
     
     except Exception as e:
         logger.error(f"Error in trading cycle: {e}")

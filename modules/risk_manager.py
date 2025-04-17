@@ -3,7 +3,7 @@ import math
 from modules.config import (
     INITIAL_BALANCE, RISK_PER_TRADE, MAX_OPEN_POSITIONS,
     USE_STOP_LOSS, STOP_LOSS_PCT, USE_TAKE_PROFIT, 
-    TAKE_PROFIT_PCT, TRAILING_STOP, TRAILING_STOP_PCT,
+    TAKE_PROFIT_PCT, TRAILING_TAKE_PROFIT, TRAILING_TAKE_PROFIT_PCT, TRAILING_STOP, TRAILING_STOP_PCT,
     AUTO_COMPOUND, COMPOUND_REINVEST_PERCENT
 )
 
@@ -189,6 +189,79 @@ class RiskManager:
             
         logger.info(f"Adjusted trailing stop loss to {new_stop}")
         return new_stop
+        
+    def adjust_take_profit_for_trailing(self, symbol, side, current_price, position_info=None):
+        """
+        Adjust take profit price based on trailing settings
+        
+        Args:
+            symbol: Trading pair symbol
+            side: Position side ('BUY' or 'SELL')
+            current_price: Current market price
+            position_info: Position information including entry_price
+            
+        Returns:
+            new_take_profit: New take profit price if it should be adjusted, None otherwise
+        """
+        if not USE_TAKE_PROFIT or not TRAILING_TAKE_PROFIT:
+            return None
+            
+        if not position_info:
+            return None
+            
+        entry_price = float(position_info.get('entry_price', 0))
+        if entry_price <= 0:
+            return None
+        
+        # Get symbol info for precision
+        symbol_info = self.binance_client.get_symbol_info(symbol)
+        if not symbol_info:
+            return None
+            
+        price_precision = symbol_info.get('price_precision', 2)
+        
+        # Calculate the current dynamic take profit level based on the current price
+        if side == 'BUY':  # Long position
+            # For long positions, we want take profit to trail above the price
+            current_take_profit = current_price * (1 + TRAILING_TAKE_PROFIT_PCT)
+            current_take_profit = math.floor(current_take_profit * 10**price_precision) / 10**price_precision
+            
+            # Check if there are open orders
+            open_orders = self.binance_client.client.futures_get_open_orders(symbol=symbol)
+            
+            # Find the current take profit order if it exists
+            existing_take_profit = None
+            for order in open_orders:
+                if order['type'] == 'TAKE_PROFIT_MARKET' and order['side'] == 'SELL':
+                    existing_take_profit = float(order['stopPrice'])
+                    break
+            
+            # If no existing take profit or our new one is better (higher for long), return the new one
+            if not existing_take_profit or current_take_profit > existing_take_profit:
+                logger.info(f"Long position: Adjusting take profit from {existing_take_profit} to {current_take_profit}")
+                return current_take_profit
+                
+        elif side == 'SELL':  # Short position
+            # For short positions, we want take profit to trail below the price
+            current_take_profit = current_price * (1 - TRAILING_TAKE_PROFIT_PCT)
+            current_take_profit = math.ceil(current_take_profit * 10**price_precision) / 10**price_precision
+            
+            # Check if there are open orders
+            open_orders = self.binance_client.client.futures_get_open_orders(symbol=symbol)
+            
+            # Find the current take profit order if it exists
+            existing_take_profit = None
+            for order in open_orders:
+                if order['type'] == 'TAKE_PROFIT_MARKET' and order['side'] == 'BUY':
+                    existing_take_profit = float(order['stopPrice'])
+                    break
+            
+            # If no existing take profit or our new one is better (higher), return the new one
+            if not existing_take_profit or current_take_profit > existing_take_profit:
+                logger.info(f"Short position: Adjusting take profit from {existing_take_profit} to {current_take_profit}")
+                return current_take_profit
+        
+        return None
         
     def update_balance_for_compounding(self):
         """Update balance tracking for auto-compounding"""
