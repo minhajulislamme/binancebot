@@ -1,0 +1,22 @@
+{
+    "strategy": "SOL_Squeeze",
+    "symbol": "SOLUSDT",
+    "timeframe": "5m",
+    "start_date": "2025-02-16",
+    "end_date": "2025-04-17",
+    "initial_balance": 50.0,
+    "final_balance": 350.0,
+    "total_return": 600.0,
+    "total_return_amt": 300.0,
+    "total_trades": 14,
+    "winning_trades": 6,
+    "losing_trades": 8,
+    "win_rate": 42.857142857142854,
+    "max_drawdown": 7.23852583178894,
+    "sharpe_ratio": 1.9909256809712512,
+    "leverage": 10,
+    "risk_per_trade": 3.0,
+    "commission_rate": 0.04,
+    "auto_compound": true,
+    "reality_check_applied": true
+}

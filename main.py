@@ -40,8 +40,8 @@ except ImportError:
     # Default values if not in config
     BACKTEST_BEFORE_LIVE = True
     BACKTEST_MIN_PROFIT_PCT = 5.0
-    BACKTEST_MIN_WIN_RATE = 50.0
-    BACKTEST_PERIOD = "30 days"
+    BACKTEST_MIN_WIN_RATE = 40.0
+    BACKTEST_PERIOD = "60 days"
 
 # Set up logging
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')

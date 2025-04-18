@@ -1,0 +1,22 @@
+{
+    "strategy": "BNB_Grid",
+    "symbol": "SOLUSDT",
+    "timeframe": "5m",
+    "start_date": "2025-03-18",
+    "end_date": "2025-04-17",
+    "initial_balance": 50.0,
+    "final_balance": 200.0,
+    "total_return": 300.0,
+    "total_return_amt": 150.0,
+    "total_trades": 44,
+    "winning_trades": 24,
+    "losing_trades": 20,
+    "win_rate": 54.54545454545454,
+    "max_drawdown": 5.922094387929335,
+    "sharpe_ratio": 3.354129338398008,
+    "leverage": 10,
+    "risk_per_trade": 3.0,
+    "commission_rate": 0.04,
+    "auto_compound": true,
+    "reality_check_applied": true
+}

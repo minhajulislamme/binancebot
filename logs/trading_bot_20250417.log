@@ -1,0 +1,354 @@
+2025-04-17 19:51:57,959 - __main__ - INFO - Running strategy validation before starting live trading
+2025-04-17 19:51:57,960 - __main__ - INFO - Running safety backtest before starting live trading...
+2025-04-17 19:51:57,960 - __main__ - INFO - Starting backtest for SOLUSDT with SOL_Squeeze strategy
+2025-04-17 19:51:59,147 - modules.binance_client - INFO - Successfully connected to Binance Production API
+2025-04-17 19:52:00,681 - modules.binance_client - INFO - Time synchronized with Binance server. Offset: -120ms
+2025-04-17 19:52:00,682 - __main__ - INFO - Fetching historical data from: 60 days (as 2025-02-16)
+2025-04-17 19:52:02,065 - modules.backtest - INFO - Running backtest on SOLUSDT 5m from 2025-02-16 to 2025-04-17
+2025-04-17 19:52:02,065 - modules.backtest - INFO - Strategy: SOL_Squeeze, Initial Balance: 50.0
+2025-04-17 19:52:02,312 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:02,698 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:03,074 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,099 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,183 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,198 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,229 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,287 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,328 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,342 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,389 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,471 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,483 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,498 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,587 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:03,643 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:04,863 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:05,467 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:05,483 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:05,500 - modules.strategies - INFO - SOL Squeeze: BUY signal - Bullish squeeze release
+2025-04-17 19:52:05,623 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:06,287 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:07,745 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:07,763 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:07,863 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:07,881 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:07,899 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:07,988 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:08,142 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:08,931 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:09,146 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,164 - modules.strategies - INFO - SOL Squeeze: BUY signal - Bullish squeeze release
+2025-04-17 19:52:09,539 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,561 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,581 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,663 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,727 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,766 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,795 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,820 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,898 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,924 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:09,946 - modules.strategies - INFO - SOL Squeeze: BUY signal - Bullish squeeze release
+2025-04-17 19:52:10,357 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:10,445 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:11,554 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:11,576 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:11,664 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:11,682 - modules.strategies - INFO - SOL Squeeze: BUY signal - Bullish squeeze release
+2025-04-17 19:52:12,364 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:12,383 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:12,408 - modules.strategies - INFO - SOL Squeeze: BUY signal - Bullish squeeze release
+2025-04-17 19:52:12,737 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:12,780 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:15,007 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:15,079 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:15,152 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:15,199 - modules.strategies - INFO - SOL Squeeze: BUY signal - Bullish squeeze release
+2025-04-17 19:52:15,631 - modules.strategies - INFO - SOL Squeeze: SELL signal - Overbought after squeeze release
+2025-04-17 19:52:15,765 - modules.strategies - INFO - SOL Squeeze: SELL signal - Overbought after squeeze release
+2025-04-17 19:52:16,039 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:17,994 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:18,772 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:18,806 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:18,860 - modules.strategies - INFO - SOL Squeeze: BUY signal - Bullish squeeze release
+2025-04-17 19:52:19,304 - modules.strategies - INFO - SOL Squeeze: SELL signal - Bearish squeeze release
+2025-04-17 19:52:19,354 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:19,380 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:19,410 - modules.strategies - INFO - SOL Squeeze: BUY signal - Early squeeze momentum building
+2025-04-17 19:52:19,563 - modules.backtest - WARNING - Applied reality check: Scaled down unrealistic return of 1087.53% to 600.00% (from $593.77 to $350.00)
+2025-04-17 19:52:20,248 - modules.backtest - INFO - Backtest results saved to /home/minhajulislam/binancebot/backtest_results/SOLUSDT_SOL_Squeeze_20250417_195219
+2025-04-17 19:52:23,415 - __main__ - WARNING - Strategy validation failed: Strategy validation failed: Win rate too low (42.86% < 50.0%)
+2025-04-17 19:52:24,950 - __main__ - ERROR - Strategy validation failed: Strategy validation failed: Win rate too low (42.86% < 50.0%)
+2025-04-17 19:52:24,950 - __main__ - ERROR - Use --skip-validation to bypass this check
+2025-04-17 19:53:12,686 - __main__ - INFO - Starting backtest for SOLUSDT with BNB_Grid strategy
+2025-04-17 19:53:13,388 - modules.binance_client - INFO - Successfully connected to Binance Production API
+2025-04-17 19:53:14,611 - modules.binance_client - INFO - Time synchronized with Binance server. Offset: -117ms
+2025-04-17 19:53:14,611 - __main__ - INFO - Fetching historical data from: 30 days ago (as 2025-03-18)
+2025-04-17 19:53:15,756 - modules.backtest - INFO - Running backtest on SOLUSDT 5m from 2025-03-18 to 2025-04-17
+2025-04-17 19:53:15,757 - modules.backtest - INFO - Strategy: BNB_Grid, Initial Balance: 50.0
+2025-04-17 19:53:15,800 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:15,811 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:15,962 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:15,970 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:15,981 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:15,991 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,035 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,047 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,057 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,076 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,084 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,163 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,172 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,203 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,214 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,225 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,295 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,474 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,524 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,535 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,705 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,733 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,744 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,758 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,770 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,781 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,792 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,800 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,910 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,930 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:16,980 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:16,991 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,013 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,025 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,211 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:17,264 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:17,274 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:17,284 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:17,342 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,387 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,498 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,510 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,548 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:17,561 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:17,573 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:17,628 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:17,742 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,831 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,854 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,865 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,926 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,946 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:17,982 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,062 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,106 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,174 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,291 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:18,314 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:18,327 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:18,350 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:18,384 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,440 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,454 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,692 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:18,720 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,733 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,747 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:18,832 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:18,843 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:18,857 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:19,006 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:19,020 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:19,044 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:19,058 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:19,069 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:19,083 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:19,201 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,230 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,267 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,392 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,550 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,568 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,647 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:19,733 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,817 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,834 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,849 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,864 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,879 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,893 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:19,964 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:20,124 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,138 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,165 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,195 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,211 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,226 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,241 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,256 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,462 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:20,477 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:20,493 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:20,508 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:20,563 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:20,633 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:20,721 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,740 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,753 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,768 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,783 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,799 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,831 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:20,846 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:21,009 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:21,028 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:21,044 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:21,061 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:21,112 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:21,237 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:21,251 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:21,491 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:21,504 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:21,534 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:21,550 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:21,793 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:21,808 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:21,825 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:21,841 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,225 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,381 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,428 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,514 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:22,569 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:22,588 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:22,624 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:22,641 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:22,661 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:22,761 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:22,777 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,829 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,846 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,863 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,880 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,898 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,916 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,933 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,949 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:22,967 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:23,439 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:23,455 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:23,533 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:23,591 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:23,634 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:23,748 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:23,764 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:23,780 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:23,798 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:23,816 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:23,873 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:23,892 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:23,911 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,016 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,061 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,079 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,098 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,190 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,206 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,227 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,300 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,442 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,457 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,477 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:24,549 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,565 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,585 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,607 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,707 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,726 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,749 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,858 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,875 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,931 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,948 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,964 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:24,981 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,093 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,112 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,148 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,167 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,356 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:25,377 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:25,398 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:25,440 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:25,662 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,681 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,699 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,725 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,745 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,764 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:25,888 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:25,972 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:25,991 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:26,032 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:26,108 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:26,144 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:26,435 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:26,457 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:26,627 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:26,646 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:26,665 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:26,758 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:26,900 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:26,919 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:26,942 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:27,002 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,025 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,047 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,066 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,125 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,179 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,644 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:27,663 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:27,725 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,764 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,785 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,882 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,927 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,949 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:27,971 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:27,993 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:28,014 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:28,033 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:28,137 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:28,161 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:28,219 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:28,366 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:28,387 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:28,484 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:28,506 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:28,527 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:28,549 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:28,571 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:28,814 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:28,854 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:29,012 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:29,038 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:29,060 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:29,721 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:29,744 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:29,765 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:29,887 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:30,158 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:30,181 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:30,206 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:30,232 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:30,254 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:30,279 - modules.strategies - INFO - BNB Grid: BUY signal - Grid buy signal at lower band
+2025-04-17 19:53:30,595 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:30,623 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:30,647 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:30,695 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:30,717 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:30,742 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:30,764 - modules.strategies - INFO - BNB Grid: SELL signal - Grid sell signal at upper band
+2025-04-17 19:53:30,944 - modules.backtest - WARNING - Applied reality check: Scaled down unrealistic return of 233336.34% to 300.00% (from $116718.17 to $200.00)
+2025-04-17 19:53:31,595 - modules.backtest - INFO - Backtest results saved to /home/minhajulislam/binancebot/backtest_results/SOLUSDT_BNB_Grid_20250417_195330
