@@ -1,0 +1,71 @@
+./setup.sh
+./run_bot.sh
+./check_bot_status.sh
+./stop_bot_manual.sh
+./setup_cron.sh
+./check_bot_status.sh
+104.248.155.109
+source venv/bin/activate  # or whatever your venv folder is named
+pip install tqdm
+
+python main.py --small-account --skip-validation
+
+python main.py --small-account --skip-validation --symbol XRPUSDT
+
+# ADA backtest for last 30 days
+python main.py --backtest --symbol ADAUSDT --strategy SmallCap --start-date "30 days ago"
+
+# XRP backtest for last 30 days
+python3 main.py --backtest --symbol XRPUSDT --strategy SmallCap --start-date "30 days ago"
+
+# DOGE backtest for last 30 days
+python main.py --backtest --symbol DOGEUSDT --strategy SmallCap --start-date "30 days ago"
+
+# For more comprehensive backtesting
+python main.py --backtest --symbol ADAUSDT --strategy SmallCap --start-date "90 days ago"
+
+python main.py --small-account --symbol YOURCHOICE --strategy SmallCap
+
+python3 main.py --backtest --symbol ADAUSDT --strategy SmallCap --start-date "30 days ago"
+
+python3 main.py --test-trade --symbol ADAUSDT --strategy SmallCap --small-account --skip-validation
+
+python3 main.py --symbol ADAUSDT --strategy SmallCap --small-account --skip-validation
+
+python3 main.py --symbol XRPUSDT --strategy SmallCap --skip-validation
+
+
+python3 main.py --symbol BTCUSDT --strategy BTC_Scalping --timeframe 5m
+python3 main.py --symbol ETHUSDT --strategy ETH_StochMACD --timeframe 15m
+python3 main.py --symbol BNBUSDT --strategy BNB_Grid --timeframe 15m
+python3 main.py --symbol SOLUSDT --strategy SOL_Squeeze --timeframe 5m
+python3 main.py --symbol ADAUSDT --strategy ADA_EMATrend --timeframe 5m
+python3 main.py --symbol XRPUSDT --strategy XRP_Scalping --timeframe 3m
+python3 main.py --symbol DOGEUSDT --strategy DOGE_Scalping --timeframe 5m
+python3 main.py --symbol SHIBUSDT --strategy SHIB_Breakout --timeframe 5m
+
+python3 main.py --backtest --symbol BNBUSDT --strategy BNB_Grid --timeframe 15m --start-date "30 days ago"
+python3 main.py --backtest --symbol XRPUSDT --strategy XRP_Scalping --timeframe 15m --start-date "30 days ago"
+python3 main.py --backtest --symbol DOGEUSDT --strategy DOGE_Scalping --timeframe 15m --start-date "30 days ago"
+python3 main.py --backtest --symbol ADAUSDT --strategy ADA_EMATrend --timeframe 15m --start-date "30 days ago"
+python3 main.py --backtest --symbol SOLUSDT --strategy SOL_Squeeze --timeframe 5m --start-date "30 days ago"
+sudo adduser username
+sudo usermod -aG sudo username
+
+python3 backtest_all_coins.py --coins BNB
+
+
+No config updates to processes
+✅ Setup completed successfully!
+📊 To start the bot: /home/minhaz/binancebot/start_bot.sh
+🛑 To stop the bot: /home/minhaz/binancebot/stop_bot.sh
+ℹ️  To check status: /home/minhaz/binancebot/check_status.sh
+💾 To backup data: /home/minhaz/binancebot/backup_data.sh
+
+Current bot status:
+binancebot                       STARTING  
+
+now add futuer gird advance strategies make it dynamica and follow trand and all kind of market condition 
+
+
+cd /home/minhajulislam/binancebot && python3 main.py --backtest --symbol XRPUSDT --timeframe 15m --strategy XRPDynamicGrid --start-date "30 days ago"
