@@ -509,8 +509,19 @@ def on_order_update(order_data):
                     logger.info(f"🟢🟢🟢 EXECUTED {side} ORDER: {filled_qty} {symbol} @ {price} 🟢🟢🟢")
                 else:
                     logger.info(f"🔴🔴🔴 EXECUTED {side} ORDER: {filled_qty} {symbol} @ {price} 🔴🔴🔴")
-            elif order_type == 'STOP_MARKET' or order_type == 'TAKE_PROFIT_MARKET':
+            elif order_type in ['STOP_MARKET', 'TAKE_PROFIT_MARKET']:
                 logger.info(f"⚠️⚠️⚠️ EXECUTED {order_type} {side} ORDER: {filled_qty} {symbol} @ {price} ⚠️⚠️⚠️")
+                
+                # Check if we need to cancel any remaining orders after a stop or take profit is hit
+                try:
+                    position = binance_client.get_position_info(symbol)
+                    # If position was closed or is very small (dust)
+                    if not position or abs(position['position_amount']) < 0.000001:
+                        logger.info(f"Position closed via {order_type}, canceling any remaining orders")
+                        cancelled = binance_client.cancel_all_open_orders(symbol)
+                        logger.info(f"Cancelled {cancelled} remaining orders for {symbol}")
+                except Exception as e:
+                    logger.error(f"Error checking position after {order_type}: {e}")
             else:
                 logger.info(f"✅✅✅ EXECUTED {order_type} {side} ORDER: {filled_qty} {symbol} @ {price} ✅✅✅")
                 
