@@ -631,3 +631,76 @@ class BinanceClient:
         
         logger.error("Maximum retries reached when getting current price")
         return None
+    
+    def get_open_orders(self, symbol):
+        """Get all open orders for a symbol"""
+        max_retries = 3
+        backoff_factor = 2
+        
+        for retry in range(max_retries):
+            try:
+                orders = self.client.futures_get_open_orders(symbol=symbol)
+                logger.info(f"Retrieved {len(orders)} open orders for {symbol}")
+                return orders
+            except Exception as e:
+                error_str = str(e)
+                # Check for common error types that should be retried
+                retry_errors = [
+                    "Invalid JSON",
+                    "Connection reset",
+                    "Read timed out",
+                    "Connection aborted",
+                    "Connection refused",
+                    "code=0",
+                    "<!DOCTYPE html>"
+                ]
+                
+                should_retry = any(err in error_str for err in retry_errors)
+                
+                if should_retry and retry < max_retries - 1:
+                    wait_time = backoff_factor * (2 ** retry)
+                    logger.warning(f"Retrying get_open_orders due to error: {e}")
+                    time.sleep(wait_time)
+                else:
+                    if "<!DOCTYPE html>" in error_str:
+                        logger.error(f"Binance API returned HTML instead of JSON. Open orders unavailable.")
+                        return []
+                    else:
+                        logger.error(f"Failed to get open orders: {e}")
+                        return []
+        
+        logger.error("Maximum retries reached when getting open orders")
+        return []
+    
+    def get_position_related_orders(self, symbol):
+        """Get all orders related to a position (stop loss and take profit orders)"""
+        orders = self.get_open_orders(symbol)
+        position_orders = []
+        
+        for order in orders:
+            # Check if the order is a stop loss or take profit order
+            if order.get('type') in ['STOP_MARKET', 'STOP', 'TAKE_PROFIT_MARKET', 'TAKE_PROFIT']:
+                position_orders.append(order)
+                
+        logger.info(f"Found {len(position_orders)} position-related orders for {symbol}")
+        return position_orders
+    
+    def cancel_position_orders(self, symbol):
+        """Cancel all orders related to a position (stop loss and take profit orders)"""
+        position_orders = self.get_position_related_orders(symbol)
+        cancelled = 0
+        
+        for order in position_orders:
+            try:
+                order_id = order.get('orderId')
+                if order_id:
+                    self.client.futures_cancel_order(symbol=symbol, orderId=order_id)
+                    logger.info(f"Cancelled position order {order_id} for {symbol}")
+                    cancelled += 1
+            except BinanceAPIException as e:
+                logger.error(f"Failed to cancel position order: {e}")
+            except Exception as e:
+                logger.error(f"Unexpected error cancelling position order: {e}")
+                
+        logger.info(f"Cancelled {cancelled} position-related orders for {symbol}")
+        return cancelled

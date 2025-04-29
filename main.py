@@ -41,7 +41,7 @@ except ImportError:
     BACKTEST_BEFORE_LIVE = True
     BACKTEST_MIN_PROFIT_PCT = 5.0
     BACKTEST_MIN_WIN_RATE = 50.0
-    BACKTEST_PERIOD = "7 days"
+    BACKTEST_PERIOD = "15 days"
 
 # Set up logging
 log_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
@@ -626,6 +626,8 @@ def check_for_signals(symbol=None):
         if signal == "BUY" and position_amount <= 0:
             if position_amount < 0:
                 logger.info("Closing existing short position before going long")
+                # Cancel only position-related orders instead of all orders
+                binance_client.cancel_position_orders(symbol)
                 binance_client.place_market_order(symbol, "BUY", abs(position_amount))
                 
             if risk_manager.should_open_position(symbol):
@@ -654,6 +656,8 @@ def check_for_signals(symbol=None):
         elif signal == "SELL" and position_amount >= 0:
             if position_amount > 0:
                 logger.info("Closing existing long position before going short")
+                # Cancel only position-related orders instead of all orders
+                binance_client.cancel_position_orders(symbol)
                 binance_client.place_market_order(symbol, "SELL", position_amount)
                 
             if risk_manager.should_open_position(symbol):
