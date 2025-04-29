@@ -30,6 +30,7 @@ def main():
     parser.add_argument('--days', type=int, default=30, help='Number of days to backtest')
     parser.add_argument('--coins', nargs='+', default=None, help='Specific coins to backtest (e.g., BTC ETH)')
     parser.add_argument('--timeframes', nargs='+', default=['15m'], help='Timeframes to test (e.g., 5m 15m 1h)')
+    parser.add_argument('--strategy', type=str, default='SOLDynamicGrid', help='Strategy to use for backtest')
     args = parser.parse_args()
     
     # Define the coins to test
@@ -57,19 +58,27 @@ def main():
     start_date = f"{args.days} days ago"
     
     # Run backtest for each coin
-    logger.info(f"Starting backtest for {len(coins_to_test)} coins over {args.days} days")
+    logger.info(f"Starting backtest for {len(coins_to_test)} coins over {args.days} days using {args.strategy} strategy")
     for symbol in coins_to_test:
         logger.info(f"Backtesting {symbol}")
         
         coin_results = {}
         
+        # Select appropriate strategy for the coin
+        strategy_name = args.strategy
+        if symbol == 'SOLUSDT' and args.strategy == 'SOLDynamicGrid':
+            strategy_name = 'SOLDynamicGrid'
+        elif symbol == 'XRPUSDT' and args.strategy == 'XRPDynamicGrid':
+            strategy_name = 'XRPDynamicGrid'
+        
         # Run backtest for each timeframe
         for timeframe in args.timeframes:
-            logger.info(f"Running {symbol} on {timeframe} timeframe")
+            logger.info(f"Running {symbol} on {timeframe} timeframe with {strategy_name} strategy")
             result = run_backtest(
                 symbol=symbol,
                 timeframe=timeframe,
                 start_date=start_date,
+                strategy_name=strategy_name,
                 save_results=True
             )
             

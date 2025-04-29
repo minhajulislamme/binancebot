@@ -42,14 +42,15 @@ class TradingStrategy:
         raise NotImplementedError("Each strategy must implement get_signal method")
 
 
-class XRPDynamicGridStrategy(TradingStrategy):
+class SOLDynamicGridStrategy(TradingStrategy):
     """
-    Dynamic XRP Grid Trading Strategy that adapts to market trends
+    Dynamic SOL Futures Grid Trading Strategy that adapts to market trends
     and different market conditions (bullish, bearish, and sideways).
+    Enhanced for futures trading with trend-following capabilities.
     """
     def __init__(self, 
-                 grid_levels=5, 
-                 grid_spacing_pct=1.0,
+                 grid_levels=6, 
+                 grid_spacing_pct=1.2,
                  trend_ema_fast=8,
                  trend_ema_slow=21,
                  volatility_lookback=20,
@@ -59,9 +60,10 @@ class XRPDynamicGridStrategy(TradingStrategy):
                  volume_ma_period=20,
                  adx_period=14,
                  adx_threshold=25,
-                 sideways_threshold=15):
+                 sideways_threshold=15,
+                 futures_mode=True):
         
-        super().__init__('XRPDynamicGrid')
+        super().__init__('SOLDynamicGrid')
         self.grid_levels = grid_levels
         self.grid_spacing_pct = grid_spacing_pct
         self.trend_ema_fast = trend_ema_fast
@@ -74,6 +76,7 @@ class XRPDynamicGridStrategy(TradingStrategy):
         self.adx_period = adx_period
         self.adx_threshold = adx_threshold
         self.sideways_threshold = sideways_threshold
+        self.futures_mode = futures_mode
         self.grids = None
         self.current_trend = None
         self.current_market_condition = None
@@ -123,6 +126,16 @@ class XRPDynamicGridStrategy(TradingStrategy):
         df['macd'] = macd.macd()
         df['macd_signal'] = macd.macd_signal()
         df['macd_diff'] = macd.macd_diff()
+        
+        # SOL-specific: Volatility-based indicators for futures trading
+        df['volatility_ratio'] = df['atr_pct'] / df['atr_pct'].rolling(window=30).mean()
+        
+        # Funding rate analysis (simulation since we can't get real funding rates in backtest)
+        # In live trading, this should be replaced with actual funding rate data
+        df['implied_funding'] = np.where(
+            df['rsi'] > 70, 0.0005,  # High positive funding in overbought conditions
+            np.where(df['rsi'] < 30, -0.0005, 0)  # Negative funding in oversold conditions
+        )
         
         # Market condition classification
         df['market_condition'] = self.classify_market_condition(df)
@@ -196,11 +209,14 @@ class XRPDynamicGridStrategy(TradingStrategy):
         else:
             condition_multiplier = 1.0
         
-        # Calculate final grid spacing
-        dynamic_spacing = base_spacing * bb_multiplier * condition_multiplier
+        # SOL-specific: Add volatility ratio adjustment for futures
+        volatility_multiplier = min(max(latest['volatility_ratio'], 0.8), 1.5)
         
-        # Ensure minimum and maximum spacing
-        return min(max(dynamic_spacing, 0.5), 3.0)
+        # Calculate final grid spacing with SOL-specific adjustments
+        dynamic_spacing = base_spacing * bb_multiplier * condition_multiplier * volatility_multiplier
+        
+        # Ensure minimum and maximum spacing - SOL can be more volatile
+        return min(max(dynamic_spacing, 0.8), 4.0)
     
     def generate_grids(self, df):
         """Generate dynamic grid levels based on current price and market conditions"""
@@ -222,6 +238,14 @@ class XRPDynamicGridStrategy(TradingStrategy):
             grid_bias = 0.3  # More levels below current price
         else:  # SIDEWAYS
             grid_bias = 0.5  # Equal distribution
+        
+        # SOL-specific: Adjust bias based on futures mode
+        if self.futures_mode:
+            # Check trend strength and adjust bias further in futures mode
+            if market_condition == 'BULLISH' and latest['adx'] > 30:
+                grid_bias = 0.8  # Even more bias to upside in strong uptrend
+            elif market_condition == 'BEARISH' and latest['adx'] > 30:
+                grid_bias = 0.2  # Even more bias to downside in strong downtrend
         
         # Calculate dynamic grid spacing
         dynamic_spacing = self.calculate_grid_spacing(df)
@@ -283,8 +307,11 @@ class XRPDynamicGridStrategy(TradingStrategy):
         min_grid = min(grid['price'] for grid in self.grids)
         max_grid = max(grid['price'] for grid in self.grids)
         
-        # If price is outside grid range by more than 2%, update grids
-        if current_price < min_grid * 0.98 or current_price > max_grid * 1.02:
+        # SOL-specific: More sensitive to price movement in futures
+        threshold = 0.015 if self.futures_mode else 0.02
+        
+        # If price is outside grid range by more than threshold, update grids
+        if current_price < min_grid * (1 - threshold) or current_price > max_grid * (1 + threshold):
             logger.info(f"Price moved outside grid range. Updating grids.")
             return True
             
@@ -318,15 +345,19 @@ class XRPDynamicGridStrategy(TradingStrategy):
         if sell_grids:
             closest_sell = min(sell_grids, key=lambda x: x['price'])
         
+        # SOL-specific: Add small buffer for entry precision
+        buy_threshold = 1.001
+        sell_threshold = 0.999
+        
         # Determine signal based on price position relative to grids
-        if closest_buy and current_price <= closest_buy['price'] * 1.001:
+        if closest_buy and current_price <= closest_buy['price'] * buy_threshold:
             # Mark this grid as triggered
             for grid in self.grids:
                 if grid['price'] == closest_buy['price']:
                     grid['status'] = 'TRIGGERED'
             return 'BUY'
             
-        elif closest_sell and current_price >= closest_sell['price'] * 0.999:
+        elif closest_sell and current_price >= closest_sell['price'] * sell_threshold:
             # Mark this grid as triggered
             for grid in self.grids:
                 if grid['price'] == closest_sell['price']:
@@ -366,7 +397,12 @@ class XRPDynamicGridStrategy(TradingStrategy):
         latest = df.iloc[-1]
         prev = df.iloc[-2]
         
-        # In bullish markets, look for dips to buy and continuation patterns
+        # SOL-specific: Add futures-oriented bullish signals
+        
+        # Strong bullish momentum with volume confirmation
+        if (latest['close'] > latest['ema_fast'] > latest['ema_slow'] and 
+            latest['volume_ratio'] > 1.2 and latest['adx'] > 25):
+            return 'BUY'
         
         # Buy on RSI oversold conditions (buy the dip)
         if latest['rsi'] < 40:
@@ -390,7 +426,12 @@ class XRPDynamicGridStrategy(TradingStrategy):
         latest = df.iloc[-1]
         prev = df.iloc[-2]
         
-        # In bearish markets, look for rallies to sell and continuation patterns
+        # SOL-specific: Add futures-oriented bearish signals
+        
+        # Strong bearish momentum with volume confirmation
+        if (latest['close'] < latest['ema_fast'] < latest['ema_slow'] and 
+            latest['volume_ratio'] > 1.2 and latest['adx'] > 25):
+            return 'SELL'
         
         # Sell on RSI overbought conditions (sell the rally)
         if latest['rsi'] > 60:
@@ -474,23 +515,27 @@ def get_strategy(strategy_name):
     from modules.config import (
         XRP_GRID_LEVELS, XRP_GRID_SPACING_PCT, XRP_TREND_EMA_FAST, XRP_TREND_EMA_SLOW,
         XRP_VOLATILITY_LOOKBACK, RSI_PERIOD, RSI_OVERBOUGHT, RSI_OVERSOLD,
-        XRP_VOLUME_MA_PERIOD, XRP_ADX_PERIOD, XRP_ADX_THRESHOLD, XRP_SIDEWAYS_THRESHOLD
+        XRP_VOLUME_MA_PERIOD, XRP_ADX_PERIOD, XRP_ADX_THRESHOLD, XRP_SIDEWAYS_THRESHOLD,
+        SOL_GRID_LEVELS, SOL_GRID_SPACING_PCT, SOL_TREND_EMA_FAST, SOL_TREND_EMA_SLOW,
+        SOL_VOLATILITY_LOOKBACK, SOL_VOLUME_MA_PERIOD, SOL_ADX_PERIOD, SOL_ADX_THRESHOLD,
+        SOL_SIDEWAYS_THRESHOLD
     )
     
     strategies = {
-        'XRPDynamicGrid': XRPDynamicGridStrategy(
-            grid_levels=XRP_GRID_LEVELS,
-            grid_spacing_pct=XRP_GRID_SPACING_PCT,
-            trend_ema_fast=XRP_TREND_EMA_FAST,
-            trend_ema_slow=XRP_TREND_EMA_SLOW,
-            volatility_lookback=XRP_VOLATILITY_LOOKBACK,
+        'SOLDynamicGrid': SOLDynamicGridStrategy(
+            grid_levels=SOL_GRID_LEVELS,
+            grid_spacing_pct=SOL_GRID_SPACING_PCT,
+            trend_ema_fast=SOL_TREND_EMA_FAST,
+            trend_ema_slow=SOL_TREND_EMA_SLOW,
+            volatility_lookback=SOL_VOLATILITY_LOOKBACK,
             rsi_period=RSI_PERIOD,
             rsi_overbought=RSI_OVERBOUGHT,
             rsi_oversold=RSI_OVERSOLD,
-            volume_ma_period=XRP_VOLUME_MA_PERIOD,
-            adx_period=XRP_ADX_PERIOD,
-            adx_threshold=XRP_ADX_THRESHOLD,
-            sideways_threshold=XRP_SIDEWAYS_THRESHOLD
+            volume_ma_period=SOL_VOLUME_MA_PERIOD,
+            adx_period=SOL_ADX_PERIOD,
+            adx_threshold=SOL_ADX_THRESHOLD,
+            sideways_threshold=SOL_SIDEWAYS_THRESHOLD,
+            futures_mode=True
         )
     }
     
@@ -509,7 +554,7 @@ def get_strategy_for_symbol(symbol, strategy_name=None):
     
     # Default strategies based on symbol
     symbol_strategies = {
-        'XRPUSDT': XRPDynamicGridStrategy()
+        'SOLUSDT': SOLDynamicGridStrategy(futures_mode=True)
     }
     
     if symbol in symbol_strategies:

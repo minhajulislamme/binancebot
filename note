@@ -65,7 +65,7 @@ No config updates to processes
 Current bot status:
 binancebot                       STARTING  
 
-now add futuer gird advance strategies make it dynamica and follow trand and all kind of market condition 
+now add sol futuer gird advance strategies make it dynamica and follow trand and all kind of market condition  than update .env and config file accordiing to this strategy than run backtest and check the performance
 
 
 cd /home/minhajulislam/binancebot && python3 main.py --backtest --symbol XRPUSDT --timeframe 15m --strategy XRPDynamicGrid --start-date "30 days ago"

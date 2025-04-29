@@ -25,13 +25,24 @@ else:
 RECV_WINDOW = int(os.getenv('BINANCE_RECV_WINDOW', '10000'))
 
 # Trading parameters
-TRADING_SYMBOL = os.getenv('TRADING_SYMBOL', 'XRPUSDT')
+TRADING_SYMBOL = os.getenv('TRADING_SYMBOL', 'SOLUSDT')  # Updated default to SOL
 TRADING_TYPE = 'FUTURES'  # Use futures trading
 LEVERAGE = int(os.getenv('LEVERAGE', '10'))
 MARGIN_TYPE = os.getenv('MARGIN_TYPE', 'ISOLATED')  # ISOLATED or CROSSED
-STRATEGY = os.getenv('STRATEGY', 'XRPDynamicGrid')
+STRATEGY = os.getenv('STRATEGY', 'SOLDynamicGrid')  # Updated default strategy
 
-# XRP Dynamic Grid Strategy settings
+# SOL Dynamic Grid Strategy settings
+SOL_GRID_LEVELS = int(os.getenv('SOL_GRID_LEVELS', '6'))
+SOL_GRID_SPACING_PCT = float(os.getenv('SOL_GRID_SPACING_PCT', '1.2'))
+SOL_TREND_EMA_FAST = int(os.getenv('SOL_TREND_EMA_FAST', '8'))
+SOL_TREND_EMA_SLOW = int(os.getenv('SOL_TREND_EMA_SLOW', '21'))
+SOL_VOLATILITY_LOOKBACK = int(os.getenv('SOL_VOLATILITY_LOOKBACK', '20'))
+SOL_VOLUME_MA_PERIOD = int(os.getenv('SOL_VOLUME_MA_PERIOD', '20'))
+SOL_ADX_PERIOD = int(os.getenv('SOL_ADX_PERIOD', '14'))
+SOL_ADX_THRESHOLD = int(os.getenv('SOL_ADX_THRESHOLD', '25'))
+SOL_SIDEWAYS_THRESHOLD = int(os.getenv('SOL_SIDEWAYS_THRESHOLD', '15'))
+
+# XRP Dynamic Grid Strategy settings (kept for backward compatibility)
 XRP_GRID_LEVELS = int(os.getenv('XRP_GRID_LEVELS', '5'))
 XRP_GRID_SPACING_PCT = float(os.getenv('XRP_GRID_SPACING_PCT', '1.0'))
 XRP_TREND_EMA_FAST = int(os.getenv('XRP_TREND_EMA_FAST', '8'))
